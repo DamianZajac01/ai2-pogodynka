@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{# @var localization \App\Entity\Localization #}
+{# @var weather \App\Entity\Weather #}
+
+{% block title %} Weather in {{ localization.city }}, {{ localization.country }} {% endblock %}
+
+{% block body %}
+<main>
+    <h1>Weather in {{ localization.city }}, {{ localization.country }}</h1>
+
+    <ul>
+        {% for w in weather %}
+            <li>{{ w.datetime|date('d.m.Y') }}: {{ w.temperature }}&deg;C</li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock %}
