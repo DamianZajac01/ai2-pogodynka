@@ -1,0 +1,18 @@
+App\Entity\Weather:
+  properties:
+    temperature:
+      - NotBlank:
+          groups: ['create', 'edit']
+      - Type: integer
+    description:
+      - Type: string
+    date:
+      - NotBlank:
+          groups: ['create', 'edit']
+      - Type: datetime
+      - GreaterThanOrEqual:
+          value: 'today'
+          groups: ['create', 'edit']
+    localization:
+      - NotBlank:
+          groups: ['create', 'edit']

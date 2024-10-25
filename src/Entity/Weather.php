@@ -15,19 +15,13 @@ class Weather
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 0)]
-    private ?string $temperature = null;
-
-    #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 0, nullable: true)]
-    private ?string $wind_speed = null;
-
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
-    private ?string $pressure = null;
+    private ?int $temperature = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $datetime = null;
+    private ?\DateTimeInterface $date = null;
 
     #[ORM\ManyToOne(inversedBy: 'weather')]
     #[ORM\JoinColumn(nullable: false)]
@@ -86,14 +80,14 @@ class Weather
         return $this;
     }
 
-    public function getDatetime(): ?\DateTimeInterface
+    public function getDate(): ?\DateTimeInterface
     {
-        return $this->datetime;
+        return $this->date;
     }
 
-    public function setDatetime(\DateTimeInterface $datetime): static
+    public function setDate(\DateTimeInterface $date): static
     {
-        $this->datetime = $datetime;
+        $this->date = $date;
 
         return $this;
     }

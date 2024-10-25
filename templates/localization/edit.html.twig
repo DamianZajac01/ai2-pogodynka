@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Localization{% endblock %}
+
+{% block body %}
+    <h1>Edit Localization</h1>
+
+    {{ include('localization/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_localization_index') }}">back to list</a>
+
+    {{ include('localization/_delete_form.html.twig') }}
+{% endblock %}

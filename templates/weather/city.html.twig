@@ -11,7 +11,7 @@
 
     <ul>
         {% for w in weather %}
-            <li>{{ w.datetime|date('d.m.Y') }}: {{ w.temperature }}&deg;C</li>
+            <li>{{ w.date|date('d.m.Y') }}: {{ w.temperature }}&deg;C</li>
         {% endfor %}
     </ul>
 </main>

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Localization{% endblock %}
+
+{% block body %}
+    <h1>Localization</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ localization.id }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ localization.country }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ localization.city }}</td>
+            </tr>
+            <tr>
+                <th>Latitude</th>
+                <td>{{ localization.latitude }}</td>
+            </tr>
+            <tr>
+                <th>Longitude</th>
+                <td>{{ localization.longitude }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_localization_index') }}">back to list</a>
+
+    <a href="{{ path('app_localization_edit', {'id': localization.id}) }}">edit</a>
+
+    {{ include('localization/_delete_form.html.twig') }}
+{% endblock %}
