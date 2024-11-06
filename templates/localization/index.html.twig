@@ -5,37 +5,48 @@
 {% block body %}
     <h1>Localization index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Country</th>
-                <th>City</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for localization in localizations %}
-            <tr>
-                <td>{{ localization.id }}</td>
-                <td>{{ localization.country }}</td>
-                <td>{{ localization.city }}</td>
-                <td>{{ localization.latitude }}</td>
-                <td>{{ localization.longitude }}</td>
-                <td>
-                    <a href="{{ path('app_localization_show', {'id': localization.id}) }}">show</a>
-                    <a href="{{ path('app_localization_edit', {'id': localization.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {%  if is_granted('ROLE_LOCALIZATION_INDEX') %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Country</th>
+                    <th>City</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for localization in localizations %}
+                <tr>
+                    <td>{{ localization.id }}</td>
+                    <td>{{ localization.country }}</td>
+                    <td>{{ localization.city }}</td>
+                    <td>{{ localization.latitude }}</td>
+                    <td>{{ localization.longitude }}</td>
+                    <td>
+                        {%  if is_granted('ROLE_LOCALIZATION_SHOW') %}
+                            <a href="{{ path('app_localization_show', {'id': localization.id}) }}">show</a>
+                        {% endif %}
+                        {%  if is_granted('ROLE_LOCALIZATION_EDIT') %}
+                            <a href="{{ path('app_localization_edit', {'id': localization.id}) }}">edit</a>
+                        {% endif %}
+                        {%  if is_granted('ROLE_WEATHER_SHOW') %}
+                            <a href="{{ path('app_weather_city', {'city': localization.city}) }}">weather</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 
-    <a href="{{ path('app_localization_new') }}">Create new</a>
+    {%  if is_granted('ROLE_LOCALIZATION_NEW') %}
+        <a href="{{ path('app_localization_new') }}">Create new</a>
+    {% endif %}
 {% endblock %}

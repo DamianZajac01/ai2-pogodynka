@@ -21,7 +21,7 @@ class WeatherRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('weather');
         $queryBuilder->where('weather.localization = :localization')
             ->setParameter('localization', $localization)
-            ->andWhere('weather.datetime > :now')
+            ->andWhere('weather.date > :now')
             ->setParameter('now', date('Y-m-d'));
 
         $query = $queryBuilder->getQuery();
