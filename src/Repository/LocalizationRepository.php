@@ -16,10 +16,11 @@ class LocalizationRepository extends ServiceEntityRepository
         parent::__construct($registry, Localization::class);
     }
 
-    public function findByCity(string $city) {
+    public function findByCountryAndCity(string $country, string $city) {
         $queryBuilder = $this->createQueryBuilder('localization');
-        $queryBuilder->where('localization.city = :city')
-            ->setParameter('city', $city);
+        $queryBuilder->where('localization.city = :city AND localization.country = :country')
+            ->setParameter('city', $city)
+            ->setParameter('country', $country);
 
         $query = $queryBuilder->getQuery();
         return $query->getOneOrNullResult();

@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Localization;
 use App\Entity\Weather;
 use App\Form\WeatherType;
-use App\Repository\LocalizationRepository;
 use App\Repository\WeatherRepository;
+use App\Service\WeatherUtil;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +16,8 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/weather')]
-final class WeatherController extends AbstractController{
+final class WeatherController extends AbstractController
+{
     #[Route(name: 'app_weather_index', methods: ['GET'])]
     #[IsGranted('ROLE_WEATHER_INDEX')]
     public function index(WeatherRepository $weatherRepository): Response
@@ -89,12 +92,14 @@ final class WeatherController extends AbstractController{
         return $this->redirectToRoute('app_weather_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{city}', name: 'app_weather_city', requirements: ['city' => '[a-zA-Z]+'])]
-    public function city(string $city, WeatherRepository $weatherRepository,
-                         LocalizationRepository $localizationRepository): Response
+    #[Route('/{country}/{city}', name: 'app_weather_city', requirements: ['country' => '[a-zA-Z]+', 'city' => '[a-zA-Z]+'])]
+    public function city(
+        #[MapEntity(mapping: ['country' => 'country', 'city' => 'city'])]
+        Localization $localization,
+        WeatherUtil $weatherUtil
+    ): Response
     {
-        $localization = $localizationRepository->findByCity($city);
-        $weather = $weatherRepository->findByLocalization($localization);
+        $weather = $weatherUtil->getWeatherForLocalization($localization);
 
         return $this->render('weather/city.html.twig', [
             'localization' => $localization,
