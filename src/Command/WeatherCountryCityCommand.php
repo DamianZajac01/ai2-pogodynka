@@ -42,8 +42,6 @@ class WeatherCountryCityCommand extends Command
             $io->writeln(sprintf("\t%s: %s", $w->getDate()->format('Y-m-d'), $w->getTemperature()));
         }
 
-
-
         return Command::SUCCESS;
     }
 }

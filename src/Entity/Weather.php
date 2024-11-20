@@ -15,7 +15,7 @@ class Weather
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 0)]
-    private ?int $temperature = null;
+    private ?float $temperature = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
@@ -26,6 +26,11 @@ class Weather
     #[ORM\ManyToOne(inversedBy: 'weather')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Localization $localization = null;
+
+    public function getFahrenheit(): ?float
+    {
+        return $this->temperature * 9/5 + 32;
+    }
 
     public function getId(): ?int
     {

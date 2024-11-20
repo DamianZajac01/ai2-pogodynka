@@ -1,0 +1,4 @@
+City,Country,Date,Celsius,Fahrenheit
+{% for w in weather %}
+    {{- city }},{{ country }},{{ w.date.format("Y-m-d") }},{{ w.temperature }},{{ w.fahrenheit }}
+{% endfor %}
